@@ -12,7 +12,7 @@ export default function GameContainer() {
     const [gameStatus, setGameStatus] = useState<GameStatusType>("ready");
     const [autoPlay, setAutoPlay] = useState(false);
 
-    const [ballCount, setBallCount] = useState(0);
+    const [ballCount, setBallCount] = useState(5);
 
     const startGame = useCallback(
         (count: number = ballCount) => {
@@ -34,7 +34,7 @@ export default function GameContainer() {
     const handleBallClick = useCallback(
         (number: number) => {
             if (number === nextNumber) {
-                setNextNumber((prev) => prev + 1);
+                setNextNumber(number + 1);
                 setBalls((prev) => prev.map((b) => (b.number === number ? { ...b, active: true } : b)));
             } else {
                 setGameStatus("fail");

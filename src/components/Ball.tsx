@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { GameStatusType } from "../types/ball.type";
 
 interface BallProps {
@@ -31,6 +31,7 @@ export default function Ball({
 }: BallProps) {
     const [timeLeft, setTimeLeft] = useState(activeTime);
     const [fade, setFade] = useState(1);
+    const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         if (active == false) {
@@ -57,14 +58,18 @@ export default function Ball({
     }, [active, gameStatus, timeLeft]);
 
     useEffect(() => {
-        let timer: ReturnType<typeof setTimeout> | null = null;
         if (autoPlay && gameStatus == "playing" && number === nextNumber) {
-            timer = setTimeout(() => onBallClick(number), (activeTime * 1000) / 3);
+            autoPlayTimerRef.current = setTimeout(() => onBallClick(number), (activeTime * 1000) / 3);
         }
-        if (autoPlay == false && timer != null) {
-            clearTimeout(timer);
+        if (autoPlay == false && active == false && autoPlayTimerRef.current != null) {
+            clearTimeout(autoPlayTimerRef.current);
         }
-    }, [autoPlay, active, number, gameStatus, nextNumber, onBallClick, activeTime]);
+        return () => {
+            if (autoPlayTimerRef.current) {
+                clearTimeout(autoPlayTimerRef.current);
+            }
+        };
+    }, [autoPlay, active, number, gameStatus, nextNumber, onBallClick, activeTime, autoPlayTimerRef]);
 
     if (active == true && timeLeft <= 0) return null;
 
