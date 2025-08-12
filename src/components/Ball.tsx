@@ -29,8 +29,8 @@ export default function Ball({
     zIndex,
     gameStatus,
 }: BallProps) {
-    const [timeLeft, setTimeLeft] = useState(activeTime);
-    const [fade, setFade] = useState(1);
+    const [timeLeft, setTimeLeft] = useState<number>(activeTime);
+    const [fade, setFade] = useState<number>(1);
     const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -41,9 +41,8 @@ export default function Ball({
     }, [active, setFade, setTimeLeft, activeTime]);
 
     useEffect(() => {
-        if (timeLeft <= 0 && active == true) {
+        if (Math.floor(timeLeft) <= 0 && active == true) {
             onBallDisappear(number);
-            return;
         }
     }, [timeLeft, onBallDisappear, number, active]);
 
