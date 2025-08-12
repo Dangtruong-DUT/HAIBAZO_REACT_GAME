@@ -14,6 +14,7 @@ interface BallProps {
     nextNumber: number;
     zIndex: number;
     gameStatus: GameStatusType;
+    ballSize: number;
 }
 
 export default function Ball({
@@ -28,6 +29,7 @@ export default function Ball({
     nextNumber,
     zIndex,
     gameStatus,
+    ballSize,
 }: BallProps) {
     const [timeLeft, setTimeLeft] = useState<number>(activeTime);
     const [fade, setFade] = useState<number>(1);
@@ -81,7 +83,7 @@ export default function Ball({
             data-ball-id={number}
             onClick={() => ballCanClick && onBallClick(number)}
             className={clsx(
-                "absolute flex flex-col items-center justify-center select-none cursor-pointer font-bold border-2 border-red-500 rounded-full w-[50px] h-[50px]",
+                "absolute flex flex-col items-center justify-center select-none cursor-pointer font-bold border-2 border-red-500 rounded-full ",
                 {
                     "bg-orange-500 text-white": active,
                     "bg-white/70 text-red-700": !active,
@@ -90,7 +92,7 @@ export default function Ball({
                     "cursor-not-allowed": !ballCanClick,
                 }
             )}
-            style={{ top: `${y}px`, left: `${x}px`, zIndex, opacity }}
+            style={{ top: `${y}px`, left: `${x}px`, zIndex, opacity, width: `${ballSize}px`, height: `${ballSize}px` }}
         >
             <span>{number}</span>
             {active && <span className="text-xs text-red-900 font-semibold">{timeLeft.toFixed(1)}s</span>}

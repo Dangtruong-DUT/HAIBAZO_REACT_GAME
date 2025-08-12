@@ -102,6 +102,7 @@ export default function GameContainer() {
                     .sort((a, b) => a.number - b.number)
                     .map((ball) => (
                         <Ball
+                            ballSize={GAME_CONFIG.ballSize}
                             onBallDisappear={handleOnBallDisappear}
                             key={ball.number}
                             number={ball.number}
