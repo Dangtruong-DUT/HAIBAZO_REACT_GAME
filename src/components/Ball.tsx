@@ -74,16 +74,20 @@ export default function Ball({
 
     const opacity = active ? fade : 1;
 
+    const ballCanClick = gameStatus === "playing" && !active;
+
     return (
         <div
             data-ball-id={number}
-            onClick={() => gameStatus == "playing" && onBallClick(number)}
+            onClick={() => ballCanClick && onBallClick(number)}
             className={clsx(
                 "absolute flex flex-col items-center justify-center select-none cursor-pointer font-bold border-2 border-red-500 rounded-full w-[50px] h-[50px]",
                 {
                     "bg-orange-500 text-white": active,
                     "bg-white/70 text-red-700": !active,
                     "shadow-lg": timeLeft > 0.5,
+                    "cursor-pointer": ballCanClick,
+                    "cursor-not-allowed": !ballCanClick,
                 }
             )}
             style={{ top: `${y}px`, left: `${x}px`, zIndex, opacity }}
