@@ -52,7 +52,7 @@ export default function Ball({
         if (active === false || gameStatus != "playing") return;
 
         const timer = setTimeout(() => {
-            setTimeLeft(Math.max(0, timeLeft - 0.1));
+            setTimeLeft(timeLeft - 0.1);
             setFade((f) => Math.max(0, f - 0.07));
         }, 100);
         return () => clearTimeout(timer);
